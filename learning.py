@@ -11,7 +11,7 @@ import theano
 import theano.tensor as T
 
 SMALL_SET = 'trees/small_set.txt'
-TRAIN_TXT = 'trees/train.txt'
+TRAIN_TXT = 'trees/train.txt' # contains 8544 training instances
 DEV_TXT = 'trees/dev.txt'
 TEST_TXT = 'trees/test.txt'
 PARAMS_PICKLED = 'pickled_data/parameters.pkl'
@@ -50,13 +50,13 @@ class Learning(object):
                                  learning_rate=learning_rate)
 
     
-    def mini_batch_learn(self, training_iterations=100,
-                    mini_batch_size=10, learning_rate=0.01):
+    def mini_batch_learn(self, training_iterations=10,
+                    mini_batch_size=25, learning_rate=0.001):
         """Trains the neural network using mini-batch learning."""
         for i in range(training_iterations):
             cost = 0.0
             tree_iterator = self.dt.tree_iterator()
-            batch_num = 1
+            batch_num = 1            
             for i, tree in enumerate(tree_iterator):
                 indices = self.dt.get_word_indices(tree)
                 cost += self.rntn.forward_pass(indices)
@@ -74,6 +74,7 @@ class Learning(object):
                     batch_num += 1
                     cost = 0.0
         self._pickle_parameters()
+        
 
 
     def _pickle_parameters(self):
@@ -111,10 +112,10 @@ class Learning(object):
                 
     
 def main():
-    ln = Learning(training_file=DEV_TXT)
-    ln.online_learn(training_iterations=50, 
-                    learning_rate=0.5)
-    ln.test_learning(test_file=DEV_TXT)
+    ln = Learning()
+    ln.mini_batch_learn(training_iterations=100, 
+                        mini_batch_size=30, learning_rate=0.8)
+    ln.test_learning()
 
 
 

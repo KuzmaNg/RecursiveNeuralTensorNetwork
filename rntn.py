@@ -21,7 +21,6 @@ from data_transformation import DataTransformation, DEV_TXT, TRAIN_TXT
 
 
 
-
 class RecursiveNeuralTensorNetwork(object):
     
 
@@ -33,7 +32,7 @@ class RecursiveNeuralTensorNetwork(object):
         self.vsize = len(dt.vocab_list)
         print 'The provided vocabulary has %i words' % self.vsize
         self.dt = dt
-        n_in = 10 # use this as an order of magnitude for now
+        n_in = 1000 # use this as an order of magnitude for now
         if W is None:
             W_values = numpy.asarray(
                 rng.uniform(
@@ -45,10 +44,12 @@ class RecursiveNeuralTensorNetwork(object):
                               borrow=True)
         # possible bias
         if b is None:
-            b_values=numpy.zeros((d,), 
+            b_values = numpy.zeros((d,), 
                                  dtype=theano.config.floatX)
             b = theano.shared(value=b_values, name='b',
                               borrow=True)
+        # r parameter for initial word vector matrix
+        # taken from paper
         r = 0.0001
         if L is None:
             L_values = numpy.asarray(
@@ -94,7 +95,7 @@ class RecursiveNeuralTensorNetwork(object):
         ym = T.dmatrix('ym')
         tm = T.dmatrix('tm')
         self.cross_entropy = theano.function([ym, tm],
-                                             (tm * T.log(ym)).sum())
+                                             (tm * T.log(ym)).sum() * -1.0)
         v1 = T.dvector('v1')
         v2 = T.dvector('v2')
         # direct sum
