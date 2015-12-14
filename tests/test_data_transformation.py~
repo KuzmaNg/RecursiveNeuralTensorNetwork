@@ -1,0 +1,47 @@
+# test_data_transformation.py
+
+"""
+    test_data_transformation
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+    Unit tests for the DataTransformation class
+
+"""
+
+import unittest
+
+
+class TestDataTransformation(unittest.TestCase):
+
+    def setUp(self):
+        """ Creates a DataTransformation instance."""
+        self.dt = DataTransformation()
+
+    def tearDown(self):
+        pass
+
+    def test_tree_iterator(self):
+        pass
+
+    def test_get_vocab_list(self):
+        pass
+
+    def test_get_word_index(self):
+        pass
+
+    def test_tree_dict(self):
+        pass
+
+    def test_tree_scores(self):
+        pass
+
+    def test_tree_stack(self):
+        pass
+
+    def test_get_word_indices(self):
+        pass
+
+
+
+if __name__ == "__main__":
+    unittest.main()
+    

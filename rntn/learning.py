@@ -56,7 +56,10 @@ class Learning(object):
         for i in range(training_iterations):
             cost = 0.0
             tree_iterator = self.dt.tree_iterator()
-            batch_num = 1            
+            batch_num = 1
+            print "=========="
+            print "TRAINING_ITERATION: ", i
+            print "=========="
             for i, tree in enumerate(tree_iterator):
                 indices = self.dt.get_word_indices(tree)
                 cost += self.rntn.forward_pass(indices)
@@ -114,7 +117,7 @@ class Learning(object):
 def main():
     ln = Learning()
     ln.mini_batch_learn(training_iterations=100, 
-                        mini_batch_size=30, learning_rate=0.8)
+                        mini_batch_size=30, learning_rate=0.13)
     ln.test_learning()
 
 
